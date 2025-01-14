@@ -16,9 +16,9 @@ test -d ./runtime && ERROR: remove ./runtime first, it seems that ther is alread
 test -d ./runtime && sleep 1h
 mkdir ./runtime
 chmod 700 ./runtime
-export FQDN=wingetty.mybuehl.local
+export FQDN=wingetty.domain.tld
 export NAMESPACE=wingetty
-export REPO_NAME=STB
+export REPO_NAME=REPO1
 export MYSQL_USER=wg
 export MYSQL_DATABASE=$REPO_NAME
 export MYSQL_PASSWORD="$(genpasswd)"
