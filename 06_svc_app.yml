@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wingetty-service
+  namespace: __NAMESPACE__
+  labels:
+    app: wingetty
+spec:
+  selector:
+    app: wingetty
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

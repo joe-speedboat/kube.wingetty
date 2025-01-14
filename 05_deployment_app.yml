@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wingetty
+  namespace: __NAMESPACE__
+  labels:
+    app: wingetty
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wingetty
+  template:
+    metadata:
+      labels:
+        app: wingetty
+    spec:
+      containers:
+      - name: wingetty
+        image: ghcr.io/thilojaeggi/wingetty:stable
+        ports:
+        - containerPort: 8080
+        env:
+        - name: WINGETTY_SQLALCHEMY_DATABASE_URI
+          value: "mysql+pymysql://__MYSQL_USER__:__MYSQL_PASSWORD__@mysql:3306/__MYSQL_DATABASE__"
+        - name: WINGETTY_SECRET_KEY
+          value: "__WINGETTY_SECRET_KEY__"
+        - name: WINGETTY_ENABLE_REGISTRATION
+          value: "0"
+        - name: WINGETTY_REPO_NAME
+          value: "__REPO_NAME__"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: TZ
+          value: "Europe/Zurich"
+        volumeMounts:
+        - name: data-instance
+          mountPath: /app/instance
+        - name: data-package
+          mountPath: /app/app/packages
+      volumes:
+      - name: data-instance
+        persistentVolumeClaim:
+          claimName: data-instance-pvc
+      - name: data-package
+        persistentVolumeClaim:
+          claimName: data-package-pvc

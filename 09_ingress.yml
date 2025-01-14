@@ -1,0 +1,22 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wingetty-ingress 
+  namespace: wingetty 
+  annotations:
+    kubernetes.io/spec.ingressClassName: traefik
+spec:
+  rules:
+    - host: __FQDN__
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wingetty-service
+                port:
+                  number: 8080
+
+
